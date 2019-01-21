@@ -19,6 +19,11 @@ function checkForInsecureScriptLoading() {
 function logSecurityVunerability(vunerability, level) {
   // TODO: send a message to the popup
   console.log("Found vunerability: " + vunerability + ". Level is: " + level);
+  var message = {
+    type: 'vulnerability',
+    body: vunerability
+  }
+  chrome.runtime.sendMessage(message);
 }
 
 // Begin vunerability testing
