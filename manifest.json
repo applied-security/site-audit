@@ -24,8 +24,12 @@
 
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["<all_urls>"],
       "js": ["onpageload.js"]
     }
+  ],
+
+  "web_accessible_resources": [
+    "jscvedb/jscves.json"
   ]
 }

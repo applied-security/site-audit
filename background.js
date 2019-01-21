@@ -47,10 +47,18 @@ function handleMessage(request, sender, sendResponse) {
     if (type == 'add') {
         vulnerabilities.push(body);
         console.log(vulnerabilities);
+
+        chrome.browserAction.setIcon({
+            path: "nomustard_pop.png"
+        });
+    } else if (type == 'getvuln') {
+        sendResponse({
+            response: vulnerabilities
+        });
+        chrome.browserAction.setIcon({
+            path: "nomustard.png"
+        });
     }
-    sendResponse({
-        response: vulnerabilities 
-    });
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);

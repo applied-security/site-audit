@@ -35,7 +35,7 @@ var popularLibraries = [
 var vulnerabilities = []
 
 var vulnerability = {
-  "libary": "",
+  "library": "",
   "id": "",
   "versions": [],
   "references": [],
@@ -70,7 +70,7 @@ function getLibraryCVEs() {
             var configParts = config.split(":");
             if (config.indexOf(lib) !== -1) {
               foundConfig = true;
-              versions.push(configParts[configParts.length - 1]);
+              versions.push(config);
             } else {
               notMatched++;
               // console.log(cve);
@@ -79,7 +79,7 @@ function getLibraryCVEs() {
 
           if (foundConfig) {
             var vun = {
-              "libary": lib,
+              "library": lib,
               "id": cve['id'],
               "versions": versions,
               "references": cve['references'],
