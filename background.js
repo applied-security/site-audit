@@ -25,10 +25,80 @@
 // {urls: ["http://*/*"]},["responseHeaders"]);
 
 
+/******script verification start*******/
+
+var VERSION_MASK = ' VERSION '
+
+// add more libraries
+var libraryToCDN = {"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/" + VERSION_MASK + "/jquery.min.js"}
+
+// keep track of libraries already inspected
+var checkedURLs = []
+
+function extractVersion(code) {
+    return code.split('v')[1].split(' ')[0];
+}
+
+function fnVerifyScript(actualScriptUrl, actualScript) {
+    return function() {
+        var expectedScript = this.responseText
+        var isScriptValid = actualScript == this.responseText;
+        if (!isScriptValid)
+        {
+          // TODO: NEED TO SEND A MESSAGE TO ACTUAL BROWSER INSTEAD OF BACKGRONUD CONSOLE
+          var message = {
+            type: 'add',
+            body: 'Script validity check failed : ' + actualScriptUrl + ' ' + this.responseURL
+          }
+          chrome.runtime.sendMessage(message);
+
+          // logged in background console
+          console.log("INVALID")
+        }
+    }
+}
+
+function requestCDNScript() {
+    var version = extractVersion(this.responseText)
+    var library = findLibraryNameFromUrl(this.responseURL)
+    if (library != null && version != null)
+    {
+        // fetch the code of expected script
+        var cdnUrl = libraryToCDN[library].replace(VERSION_MASK, version)
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", fnVerifyScript(this.responseURL, this.responseText));
+        oReq.open("GET", cdnUrl);
+        oReq.send();  
+    }
+}
+
+function findLibraryNameFromUrl(url) {
+    for (library in libraryToCDN)
+    {
+        if (url.indexOf(library) != -1)
+        {
+            return library
+        }
+    }
+    return null
+}
+
 // intercepts all script stuff in background console
 chrome.webRequest.onCompleted.addListener(
 function(details) {
-    console.info("URL :" + details.url);
+    var url = details.url.toLowerCase()
+    var library = findLibraryNameFromUrl(url)
+    if (library != null && !checkedURLs.includes(url))
+    {
+        // keep track
+        checkedURLs.push(url)
+
+        // fetch the code of script
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", requestCDNScript);
+        oReq.open("GET", url);
+        oReq.send();
+    }
 }, 
 {
     urls: [
@@ -38,6 +108,9 @@ function(details) {
 },
 ["responseHeaders"]);
 
+
+
+/******script verification end*******/
 
 var vulnerabilities = [];
 
