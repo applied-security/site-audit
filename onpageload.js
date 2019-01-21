@@ -2,6 +2,12 @@
 function checkForInsecureScriptLoading() {
   let scriptElems = document.getElementsByTagName("script");
 
+  if (document.URL.indexOf("http://") === 0) {
+    vunerability = "You are loading your site over http, consider using https";
+    logSecurityVunerability(vunerability, 2)
+    return;
+  }
+
   for (let i = 0; i < scriptElems.length; i++) {
     let scriptElem = scriptElems[i];
     let srcUrl = scriptElem.getAttribute("src");
