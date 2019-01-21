@@ -38,10 +38,12 @@ var libraryToCDN = {
 // keep track of libraries already inspected
 var checkedURLs = []
 
+// find version of script from its body
 function extractVersion(code) {
     return code.split('v')[1].split(' ')[0];
 }
 
+// compare expected script vs actual script
 function fnVerifyScript(actualScriptUrl, actualScript) {
     return function() {
         var expectedScript = this.responseText  
@@ -61,6 +63,7 @@ function fnVerifyScript(actualScriptUrl, actualScript) {
     }
 }
 
+// fetch expected script
 function requestCDNScript() {
     var version = extractVersion(this.responseText)
     var library = findLibraryNameFromUrl(this.responseURL)
@@ -75,6 +78,7 @@ function requestCDNScript() {
     }
 }
 
+// e.g. look for jquery.min.js -> return jquery
 function findLibraryNameFromUrl(url) {
     for (library in libraryToCDN)
     {
