@@ -1,13 +1,29 @@
 {
   "manifest_version": 2,
   "name": "SiteAudit",
-  "version": 1,
+  "version": "1",
   "author": "Josh, Inusha and Oliver",
 
   "browser_action": {
     "default_icon": "nomustard.png",
-    "default_title": "SiteAudit"
+    "default_title": "SiteAudit",
+    "default_popup": "audit.html"
   },
 
-  "permissions": ["activeTab"]
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "background",
+    "webNavigation"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["onpageload.js"]
+    }
+  ]
 }
