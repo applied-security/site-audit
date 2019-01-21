@@ -39,9 +39,18 @@ function(details) {
 ["responseHeaders"]);
 
 
+var vulnerabilities = [];
 
 function handleMessage(request, sender, sendResponse) {
-    alert('Message received'); 
+    let type = request['type'];
+    let body = request['body'];
+    if (type == 'add') {
+        vulnerabilities.push(body);
+        console.log(vulnerabilities);
+    }
+    sendResponse({
+        response: vulnerabilities 
+    });
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);
