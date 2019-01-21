@@ -12,12 +12,14 @@
 
   "background": {
     "scripts": ["background.js"],
-    "persistent": false
+    "persistent": true
   },
 
   "permissions": [
+    "<all_urls>",
     "background",
-    "webNavigation"
+    "webNavigation",
+    "webRequest"
   ],
 
   "content_scripts": [
