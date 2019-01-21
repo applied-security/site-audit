@@ -1,4 +1,3 @@
-
 function checkForInsecureScriptLoading() {
   let scriptElems = document.getElementsByTagName("script");
 
@@ -26,7 +25,7 @@ function logSecurityVulnerability(vulnerability, level) {
   // TODO: send a message to the popup
   console.log("Found vulnerability: " + vulnerability + ". Level is: " + level);
   var message = {
-    type: 'vulnerability',
+    type: 'add',
     body: vulnerability
   }
   chrome.runtime.sendMessage(message);
