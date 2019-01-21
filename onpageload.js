@@ -8,23 +8,23 @@ function checkForInsecureScriptLoading() {
     if (srcUrl !== null) {
       let lowerUrl = srcUrl.toLowerCase();
       if (lowerUrl.indexOf("http://") === 0) {
-        vunerability = "Script loaded over unsafe http: " + lowerUrl;
-        logSecurityVunerability(vunerability, 2);
+        vulnerability = "Script loaded over unsafe http: " + lowerUrl;
+        logSecurityVulnerability(vulnerability, 2);
       }
     }
   }
 }
 
 
-function logSecurityVunerability(vunerability, level) {
+function logSecurityVulnerability(vulnerability, level) {
   // TODO: send a message to the popup
-  console.log("Found vunerability: " + vunerability + ". Level is: " + level);
+  console.log("Found vulnerability: " + vulnerability + ". Level is: " + level);
   var message = {
     type: 'vulnerability',
-    body: vunerability
+    body: vulnerability
   }
   chrome.runtime.sendMessage(message);
 }
 
-// Begin vunerability testing
+// Begin vulnerability testing
 checkForInsecureScriptLoading()
