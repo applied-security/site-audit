@@ -30,7 +30,10 @@
 var VERSION_MASK = ' VERSION '
 
 // add more libraries
-var libraryToCDN = {"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/" + VERSION_MASK + "/jquery.min.js"}
+var libraryToCDN = {
+                        "jquery.min.js": "https://ajax.googleapis.com/ajax/libs/jquery/" + VERSION_MASK + "/jquery.min.js",
+                        "angular.min.js": "https://ajax.googleapis.com/ajax/libs/angularjs/" + VERSION_MASK + "/angular.min.js"
+                   }
 
 // keep track of libraries already inspected
 var checkedURLs = []
@@ -41,7 +44,7 @@ function extractVersion(code) {
 
 function fnVerifyScript(actualScriptUrl, actualScript) {
     return function() {
-        var expectedScript = this.responseText
+        var expectedScript = this.responseText  
         var isScriptValid = actualScript == this.responseText;
         if (!isScriptValid)
         {
@@ -51,10 +54,10 @@ function fnVerifyScript(actualScriptUrl, actualScript) {
             body: 'Script validity check failed : ' + actualScriptUrl + ' ' + this.responseURL
           }
           chrome.runtime.sendMessage(message);
-
-          // logged in background console
-          console.log("INVALID")
         }
+
+      // logged in background console
+      console.log("[~] SCRIPT VERIFICATION : " + isScriptValid)
     }
 }
 
