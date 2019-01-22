@@ -49,11 +49,32 @@ function extractVersion(code) {
     return code.split('v')[1].split(' ')[0];
 }
 
+// given a piece of code, will remove white space and single line comments
+function removeCommentsAndMinify(code) {
+    var newCode = ""
+    var lines = code.split(/\r|\n/)
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i]
+
+        // remove comment if it exists
+        var indexCommentStart = line.indexOf('//')
+        if (indexCommentStart != -1) {
+            line = line.substring(0, indexCommentStart)
+        }
+        newCode += line
+    }
+
+    // remove all white space
+    return newCode.replace(/\s/g,'')
+}
+
 // compare expected script vs actual script
 function fnVerifyScript(actualScriptUrl, actualScript) {
     return function() {
         var expectedScript = this.responseText  
-        var isScriptValid = actualScript == this.responseText;
+        var isScriptValid = removeCommentsAndMinify(actualScript) == removeCommentsAndMinify(this.responseText);
+        console.log(actualScript)
+        console.log(this.responseText)
         if (!isScriptValid)
         {
           var message = {
