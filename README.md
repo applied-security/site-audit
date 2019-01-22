@@ -11,4 +11,4 @@ For example if a site has decided to load “http://example.com/jquery.min.js”
 
 Adding new libraries to check against is as simple as finding a trusted CDN for the library and adding it to the libraryToCDN map within background.js.
 
-This feature can be further extended to parse, remove comments and minify both the libraries being checked to remove any modifications that do not affect the behavior of libraries. We could also measure the difference between the libraries and present it to the user for closer inspection.
+This feature has been further improved to parse, remove comments and minify both the libraries being checked to remove any modifications that do not affect the behavior of libraries. We could have also measure the difference between the libraries and present it to the user for closer inspection.
