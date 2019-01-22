@@ -83,12 +83,12 @@ function matchCVEtoLibs(cves) {
       let scriptPromise = fetch(url).then(function (response) {
         return response.text();
       }).then(function (text) {
-        let versionregex  = /\d+(\.\d+){0,2}/g
+        let versionregex  = /v\d+(\.\d+){0,2}/g
         found = text.match(versionregex);
         if (found) {
           hasVersion = true;
           found.forEach((version) => {
-            script.versions.push(version);
+            script.versions.push(version.substring(1, version.length));
           })
         }
 
@@ -123,21 +123,27 @@ function matchCVEtoLibs(cves) {
           }
         }
 
-        for (let k = 0; k < script.names.length; k++) {
+        for (let k = 0; k < script.versions.length; k++) {
           let vName = script.versions[k];
           for (let l = 0; l < cve.versions.length; l++) {
             let cveName = cve.versions[l];
-            if (cveName.indexOf(vName) !== -1) {
+            if (cveName.indexOf(":" + vName) !== -1) {
               versionMatch = true;
             }
           }
+        }
+
+        if (!(nameMatch && versionMatch)) {
+          // Both have to match at the same time
+          nameMatch = false;
+          versionMatch = false;
         }
       }
 
       if (nameMatch && versionMatch) {
         // Finally!!
         console.log("MATCH", cve);
-        logSecurityVulnerability(cve, "8");
+        logSecurityVulnerability(cve.summary, "8");
       }
     }
   })
