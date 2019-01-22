@@ -58,7 +58,7 @@ function fnVerifyScript(actualScriptUrl, actualScript) {
         {
           var message = {
             type: 'add',
-            body: 'Script validity check failed : ' + actualScriptUrl + ' ' + this.responseURL
+            body: 'Script integrity violation - actual=' + actualScriptUrl + ' expected=' + this.responseURL
           }
 
           handleMessage(message, null, null)
