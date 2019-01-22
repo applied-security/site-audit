@@ -29,10 +29,12 @@
 
 var VERSION_MASK = ' VERSION '
 
+// example site that fails: https://minaleandmann.com/
 // add more libraries
 var libraryToCDN = {
                         "jquery.min.js": "https://ajax.googleapis.com/ajax/libs/jquery/" + VERSION_MASK + "/jquery.min.js",
-                        "angular.min.js": "https://ajax.googleapis.com/ajax/libs/angularjs/" + VERSION_MASK + "/angular.min.js"
+                        "angular.min.js": "https://ajax.googleapis.com/ajax/libs/angularjs/" + VERSION_MASK + "/angular.min.js",
+                        "bootstrap.bundle.min.js": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/" + VERSION_MASK + "/js/bootstrap.bundle.min.js"
                    }
 
 // keep track of libraries already inspected
@@ -50,12 +52,12 @@ function fnVerifyScript(actualScriptUrl, actualScript) {
         var isScriptValid = actualScript == this.responseText;
         if (!isScriptValid)
         {
-          // TODO: NEED TO SEND A MESSAGE TO ACTUAL BROWSER INSTEAD OF BACKGRONUD CONSOLE
           var message = {
             type: 'add',
             body: 'Script validity check failed : ' + actualScriptUrl + ' ' + this.responseURL
           }
-          chrome.runtime.sendMessage(message);
+
+          handleMessage(message, null, null)
         }
 
       // logged in background console
