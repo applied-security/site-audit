@@ -34,7 +34,11 @@ var VERSION_MASK = ' VERSION '
 var libraryToCDN = {
                         "jquery.min.js": "https://ajax.googleapis.com/ajax/libs/jquery/" + VERSION_MASK + "/jquery.min.js",
                         "angular.min.js": "https://ajax.googleapis.com/ajax/libs/angularjs/" + VERSION_MASK + "/angular.min.js",
-                        "bootstrap.bundle.min.js": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/" + VERSION_MASK + "/js/bootstrap.bundle.min.js"
+                        "bootstrap.bundle.min.js": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/" + VERSION_MASK + "/js/bootstrap.bundle.min.js",
+                        "d3.min.js": "https://ajax.googleapis.com/ajax/libs/d3js/" + VERSION_MASK + "/d3.min.js",
+                        "hammer.min.js": "https://ajax.googleapis.com/ajax/libs/hammerjs/" + VERSION_MASK + "/hammer.min.js",
+                        "jquery-ui.css": "https://ajax.googleapis.com/ajax/libs/jqueryui/" + VERSION_MASK + "/themes/smoothness/jquery-ui.css",
+                        "jquery-ui.min.js": "https://ajax.googleapis.com/ajax/libs/jqueryui/" + VERSION_MASK + "/jquery-ui.min.js"
                    }
 
 // keep track of libraries already inspected
