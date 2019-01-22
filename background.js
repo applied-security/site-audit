@@ -29,7 +29,7 @@
 
 var VERSION_MASK = ' VERSION '
 
-// example site that fails: https://minaleandmann.com/
+// example site that fails: https://minaleandmann.com -> update: not anymore (ignores comments)
 // add more libraries
 var libraryToCDN = {
                         "jquery.min.js": "https://ajax.googleapis.com/ajax/libs/jquery/" + VERSION_MASK + "/jquery.min.js",
