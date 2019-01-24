@@ -163,7 +163,8 @@ function logSecurityVulnerability(vulnerability, level) {
   var message = {
     type: 'add',
     body: vulnerability,
-    lvl: level
+    lvl: level,
+    url: document.URL
   }
   chrome.runtime.sendMessage(message);
 }

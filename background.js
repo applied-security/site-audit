@@ -146,15 +146,19 @@ function(details) {
 
 /******script verification end*******/
 
-var vulnerabilities = [];
+var vulnerabilities = {};
 
 function handleMessage(request, sender, sendResponse) {
     let type = request['type'];
     let body = request['body'];
-    let lvl = request['lvl'];
     if (type == 'add') {
-        vulnerabilities.push({'vul': body, 'lvl': lvl});
-        console.log(vulnerabilities);
+        let lvl = request['lvl'];
+        let url = request['url'];
+        if (url in vulnerabilities) {
+            vulnerabilities[url].push({'vul': body, 'lvl': lvl});
+        } else {
+            vulnerabilities[url] = [{'vul': body, 'lvl': lvl}];
+        }
 
         chrome.browserAction.setIcon({
             path: "nomustard_pop.png"
