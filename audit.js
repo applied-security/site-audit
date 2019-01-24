@@ -23,12 +23,17 @@ function getVulnerabilities() {
           var html = '';
           for (var i = 0; i < vuls.length; i++) {
             col = getColour(vuls[i]['lvl']);
-            html += "<li><a style=\"color: " + col + "\">" + vuls[i]['vul'] + "</a></li>";
+            html += "<li><a style=\"color: " + col + "; font-size: 12pt\">" + vuls[i]['vul'] + "</a></li>";
+            if ('access' in vuls[i]) {
+                html += "<ul><li>Reference: <a href=\"" + vuls[i]['references'][0]
+                    + "\">" + vuls[i]['references'][0] + "</a></li>";
+                let acc = vuls[i]['access'];
+                html += "<li>Access: <ul><li>Authentication = " + acc['authentication'] + "</li>"; 
+                html += "<li>Complexity = " + acc['complexity'] + "</li>";
+                html += "<li>Vector = " + acc['vector'] + "</ul></li></ul>";
+            }
           }
           ul.innerHTML = html;
-          console.log('HERE');
-          console.log(url_html);
-          console.log(ul);
           document.getElementById('vulnerabilities').appendChild(url_html);
           document.getElementById('vulnerabilities').appendChild(ul);
     });

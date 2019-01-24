@@ -148,16 +148,41 @@ function(details) {
 
 var vulnerabilities = {};
 
+//var vulnerability = {
+//  "library": "",
+//  "id": "",
+//  "versions": [],
+//  "references": [],
+//  "summary": "",
+//  "access": {},
+//  "impact": {},
+//};
+
 function handleMessage(request, sender, sendResponse) {
     let type = request['type'];
     let body = request['body'];
     if (type == 'add') {
+        let vul = body['summary']
         let lvl = request['lvl'];
         let url = request['url'];
-        if (url in vulnerabilities) {
-            vulnerabilities[url].push({'vul': body, 'lvl': lvl});
+        let obj = {}
+        if ('access' in body) {
+            obj = {
+                'vul': vul,
+                'lvl': lvl,
+                'access': body['access'],
+                'references': body['references']
+            };
         } else {
-            vulnerabilities[url] = [{'vul': body, 'lvl': lvl}];
+            obj = {
+                'vul': vul,
+                'lvl': lvl,
+            }
+        }
+        if (url in vulnerabilities) {
+            vulnerabilities[url].push(obj);
+        } else {
+            vulnerabilities[url] = [obj];
         }
 
         chrome.browserAction.setIcon({

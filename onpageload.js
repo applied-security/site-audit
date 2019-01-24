@@ -3,7 +3,7 @@ function checkForInsecureScriptLoading() {
 
   if (document.URL.indexOf("http://") === 0) {
     vulnerability = "You are loading your site over http, consider using https";
-    logSecurityVulnerability(vulnerability, 2)
+    logSecurityVulnerability({'summary': vulnerability}, 2)
     return;
   }
 
@@ -14,7 +14,7 @@ function checkForInsecureScriptLoading() {
       let lowerUrl = srcUrl.toLowerCase();
       if (lowerUrl.indexOf("http://") === 0) {
         vulnerability = "Script loaded over unsafe http: " + lowerUrl;
-        logSecurityVulnerability(vulnerability, 2);
+        logSecurityVulnerability({'summary': vulnerability}, 2);
       }
     }
   }
@@ -140,7 +140,7 @@ function matchCVEtoLibs(cves) {
 
       if (nameMatch && versionMatch) {
         // Finally!!
-        logSecurityVulnerability(cve.summary, "8");
+        logSecurityVulnerability(cve, 8);
       }
     }
   })
