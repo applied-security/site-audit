@@ -151,8 +151,9 @@ var vulnerabilities = [];
 function handleMessage(request, sender, sendResponse) {
     let type = request['type'];
     let body = request['body'];
+    let lvl = request['lvl'];
     if (type == 'add') {
-        vulnerabilities.push(body);
+        vulnerabilities.push({'vul': body, 'lvl': lvl});
         console.log(vulnerabilities);
 
         chrome.browserAction.setIcon({

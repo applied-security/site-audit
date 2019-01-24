@@ -44,7 +44,6 @@ function matchCVEtoLibs(cves) {
   let scriptElems = document.getElementsByTagName("script");
   let scripts = [];
   let scriptPromises = [];
-  console.log(cves);
 
   for (let i = 0; i < scriptElems.length; i++) {
     let script = {
@@ -94,7 +93,6 @@ function matchCVEtoLibs(cves) {
 
         if (hasVersion && hasName) {
           scripts.push(script);
-          console.log(script);
         }
       })
 
@@ -142,7 +140,6 @@ function matchCVEtoLibs(cves) {
 
       if (nameMatch && versionMatch) {
         // Finally!!
-        console.log("MATCH", cve);
         logSecurityVulnerability(cve.summary, "8");
       }
     }
@@ -153,7 +150,6 @@ function loadJsCVEs() {
   let url = chrome.runtime.getURL('jscvedb/jscves.json');
 
   fetch(url).then(function (response) {
-    console.log(response);
     return response.json()
   }).then(function(json) {
     matchCVEtoLibs(json);
@@ -166,7 +162,8 @@ function logSecurityVulnerability(vulnerability, level) {
   console.log("Found vulnerability: " + vulnerability + ". Level is: " + level);
   var message = {
     type: 'add',
-    body: vulnerability
+    body: vulnerability,
+    lvl: level
   }
   chrome.runtime.sendMessage(message);
 }
