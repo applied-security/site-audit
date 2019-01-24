@@ -4,12 +4,13 @@ function getVulnerabilities() {
     body: 'all'
   }
   chrome.runtime.sendMessage(message, function(response) {
-  	  var htmlBuilder = "<ul>"
+  	  var ul = document.createElement('ul');
+      var html = '';
   	  for (var i = 0; i < response.response.length; i++) {
-		htmlBuilder += "<li><a style=\"color: orange\">" + response.response[i] + "</a></li>"  	  	
+		html += "<li><a style=\"color: orange\">" + response.response[i] + "</a></li>";
   	  }
-      htmlBuilder += "</ul>"
-      document.body.innerHTML = htmlBuilder
+      ul.innerHTML = html;
+      document.getElementById('vulnerabilities').appendChild(ul);
   });
 }
 
